@@ -6,8 +6,9 @@ FROM agentrq/agentrq:0.17.4@sha256:de038f632cad3783e0f4c03624c4ad8e60dd667230dc9
 
 FROM alpine:3.22.8@sha256:49340b346798875b5592e5d420241f2f9cfba5f47e62ebb1446a1b34734e898f
 
-RUN apk add --no-cache su-exec ca-certificates tzdata \
- && mkdir -p /_storage
+# No apk packages needed: Alpine ships the CA bundle, and BusyBox su drops to
+# "nobody" while keeping PID 1 and the environment.
+RUN mkdir -p /_storage
 
 COPY --from=upstream /agentrq /usr/local/bin/agentrq
 COPY start.sh /usr/local/bin/start.sh

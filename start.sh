@@ -54,4 +54,4 @@ mkdir -p "$AGENTRQ_STORAGE_DIR"
 chown -R nobody:nobody "$AGENTRQ_STORAGE_DIR" 2>/dev/null || true
 
 echo "start.sh: AgentRQ $(date -u +%FT%TZ) port=$PORT db=$([ "$AGENTRQ_POSTGRES_ENABLED" = true ] && echo postgres || echo sqlite) gomemlimit=${GOMEMLIMIT:-none}"
-exec su-exec nobody:nobody /usr/local/bin/agentrq
+exec su -m -s /bin/sh nobody -c "exec /usr/local/bin/agentrq"
